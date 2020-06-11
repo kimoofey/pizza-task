@@ -1,12 +1,12 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
-export default function PizzaModal() {
+export default function PizzaModal(props) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -20,7 +20,7 @@ export default function PizzaModal() {
     return (
         <div>
             <Button variant="outlined" size="small" color="primary" onClick={handleClickOpen}>
-                View
+                {"More  info"}
             </Button>
             <Dialog
                 open={open}
@@ -28,16 +28,15 @@ export default function PizzaModal() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous location data to
-                        Google, even when no apps are running.
+                        {props.contentText}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary" autoFocus>
-                        Close
+                        {"Got it!"}
                     </Button>
                 </DialogActions>
             </Dialog>

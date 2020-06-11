@@ -1,12 +1,13 @@
+import PizzaPage from "../PizzaPage";
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import AdditionalPage from "../AdditionalMenuPage";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import PizzaPage from "../PizzaPage";
-import AdditionalPage from "../AdditionalMenuPage";
+import OrderForm from "../OrderForm";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +34,7 @@ function getStepContent(stepIndex) {
         case 1:
             return <AdditionalPage/>;
         case 2:
-            return 'Soon!';
+            return <OrderForm/>;
         default:
             return 'Unknown step.';
     }

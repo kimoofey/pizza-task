@@ -1,18 +1,20 @@
 import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import PizzaModal from "../PizzaModal";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from '@material-ui/icons/Add';
+import Badge from '@material-ui/core/Badge';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import PizzaModal from "../PizzaModal";
-import {pizzaList} from "../../FakeBackend/items";
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import {pizzaList} from "../../FakeBackend/items";
 import RemoveIcon from '@material-ui/icons/Remove';
-import Tooltip from "@material-ui/core/Tooltip";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const styles = makeStyles((theme) => ({
     icon: {
@@ -70,12 +72,18 @@ class PizzaPage extends Component {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <PizzaModal/>
+                                    <PizzaModal contentText={pizzaList[index].description}
+                                                title={pizzaList[index].title}/>
                                     <Tooltip title="Remove">
                                         <IconButton aria-label="add to favorites">
                                             <RemoveIcon/>
                                         </IconButton>
                                     </Tooltip>
+                                    <IconButton aria-label="cart">
+                                        <Badge badgeContent={4} color="secondary">
+                                            <ShoppingCartIcon/>
+                                        </Badge>
+                                    </IconButton>
                                     <Tooltip title="Add">
                                         <IconButton aria-label="share">
                                             <AddIcon/>

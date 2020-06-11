@@ -1,16 +1,18 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import PizzaModal from "../PizzaModal";
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import PizzaModal from "../PizzaModal";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import {additionalList} from "../../FakeBackend/items";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -63,9 +65,15 @@ export default function AdditionalPage() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <PizzaModal/>
+                                    <PizzaModal contentText={additionalList[index].description}
+                                                title={additionalList[index].title}/>
                                     <IconButton aria-label="add to favorites">
                                         <RemoveIcon/>
+                                    </IconButton>
+                                    <IconButton aria-label="cart">
+                                        <Badge badgeContent={4} color="secondary">
+                                            <ShoppingCartIcon/>
+                                        </Badge>
                                     </IconButton>
                                     <IconButton aria-label="share">
                                         <AddIcon/>
