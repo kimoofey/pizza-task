@@ -10,14 +10,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import RemoveIcon from '@material-ui/icons/Remove';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {connect} from "react-redux";
 import {ADD_PIZZA, REMOVE_PIZZA} from "../../actions/pizzaAT";
 
-const styles = makeStyles((theme) => ({
+const styles = theme => ({
     icon: {
         marginRight: theme.spacing(2),
     },
@@ -31,7 +31,6 @@ const styles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     cardMedia: {
-        paddingTop: '56.25%',
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -39,12 +38,12 @@ const styles = makeStyles((theme) => ({
     },
     cardContent: {
         flexGrow: 1,
+        textAlign: 'center',
     },
-    footer: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(6),
-    },
-}));
+    cardAction: {
+        justifyContent: 'space-between',
+    }
+});
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -79,24 +78,26 @@ class PizzaPage extends Component {
                                         {`${pizzaItems[index].price}$`}
                                     </Typography>
                                 </CardContent>
-                                <CardActions>
+                                <CardActions className={classes.cardAction}>
                                     <PizzaModal contentText={pizzaItems[index].description}
                                                 title={pizzaItems[index].title}/>
-                                    <Tooltip title="Remove">
-                                        <IconButton aria-label="remove-from-cart" onClick={() => decrement(index)}>
-                                            <RemoveIcon/>
+                                    <div>
+                                        <Tooltip title="Remove">
+                                            <IconButton aria-label="remove-from-cart" onClick={() => decrement(index)}>
+                                                <RemoveIcon/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <IconButton aria-label="cart">
+                                            <Badge badgeContent={pizzaItems[index].amount} color="secondary">
+                                                <ShoppingCartIcon/>
+                                            </Badge>
                                         </IconButton>
-                                    </Tooltip>
-                                    <IconButton aria-label="cart">
-                                        <Badge badgeContent={pizzaItems[index].amount} color="secondary">
-                                            <ShoppingCartIcon/>
-                                        </Badge>
-                                    </IconButton>
-                                    <Tooltip title="Add">
-                                        <IconButton aria-label="add-to-cart" onClick={() => increment(index)}>
-                                            <AddIcon/>
-                                        </IconButton>
-                                    </Tooltip>
+                                        <Tooltip title="Add">
+                                            <IconButton aria-label="add-to-cart" onClick={() => increment(index)}>
+                                                <AddIcon/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </div>
                                 </CardActions>
                             </Card>
                         </Grid>

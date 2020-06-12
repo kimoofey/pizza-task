@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         paddingBottom: '20px',
     },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
     backButton: {
         marginRight: theme.spacing(1),
     },
@@ -42,7 +47,7 @@ function getStepContent(stepIndex) {
 
 export default function MainPage() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(2);
     const steps = getSteps();
 
     const handleNext = () => {
@@ -66,7 +71,7 @@ export default function MainPage() {
                     </Step>
                 ))}
             </Stepper>
-            <div>
+            <div className={classes.buttons}>
                 {activeStep === steps.length ? (
                     <div>
                         <Typography className={classes.instructions}>All steps completed</Typography>
