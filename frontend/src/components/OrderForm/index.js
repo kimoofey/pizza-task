@@ -19,6 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {getTotalPriceAdditional, getTotalPricePizza} from "../../selectors";
+import {FILLED_EMAIL, FILLED_FIRST_NAME, FILLED_LAST_NAME} from "../../actions/formAT";
 
 const styles = (theme) => ({
     root: {
@@ -29,7 +30,6 @@ const styles = (theme) => ({
 });
 
 class OrderForm extends Component {
-
     render() {
         const {
             pizzaItems,
@@ -40,6 +40,12 @@ class OrderForm extends Component {
             decrementAdditional,
             pizzaTotal,
             additionalTotal,
+            firstNameValue,
+            lastNameValue,
+            emailValue,
+            filledFirstName,
+            filledLastName,
+            filledEmail,
         } = this.props;
 
         return (
@@ -131,16 +137,24 @@ class OrderForm extends Component {
                         <FormGroup noValidate autoComplete="off">
                             <TextField
                                 required
-                                id="standard-required"
-                                label="First Name"/>
+                                id="first-name-required"
+                                label="First Name"
+                                value={firstNameValue}
+                                onChange={(e) => filledFirstName({value: e.target.value, filled: !!e.target.value})}
+                            />
                             <TextField
                                 required
-                                id="standard-required"
-                                label="Last Name"/>
+                                id="last-name-required"
+                                label="Last Name"
+                                value={lastNameValue}
+                                onChange={(e) => filledLastName({value: e.target.value, filled: !!e.target.value})}
+                            />
                             <TextField
                                 required
                                 id="standard-email-input"
                                 label="Email"
+                                value={emailValue}
+                                onChange={(e) => filledEmail({value: e.target.value, filled: !!e.target.value})}
                             />
                             <TextField
                                 id="standard-number"
@@ -160,6 +174,9 @@ const mapStateToProps = state => {
         additionalItems: state.additionalMenuReducer.items,
         pizzaTotal: getTotalPricePizza(state),
         additionalTotal: getTotalPriceAdditional(state),
+        firstNameValue: state.formReducer.items.firstName.value,
+        lastNameValue: state.formReducer.items.lastName.value,
+        emailValue: state.formReducer.items.email.value,
     };
 };
 
@@ -169,6 +186,9 @@ const mapDispatchToProps = dispatch => {
         decrementPizza: id => dispatch({type: REMOVE_PIZZA, id}),
         incrementAdditional: id => dispatch({type: ADD_ITEM, id}),
         decrementAdditional: id => dispatch({type: REMOVE_ITEM, id}),
+        filledFirstName: item => dispatch({type: FILLED_FIRST_NAME, payload: item}),
+        filledLastName: item => dispatch({type: FILLED_LAST_NAME, payload: item}),
+        filledEmail: item => dispatch({type: FILLED_EMAIL, payload: item}),
     }
 };
 

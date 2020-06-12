@@ -6,7 +6,7 @@ import PizzaModal from "../PizzaModal";
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -15,7 +15,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import {ADD_ITEM, REMOVE_ITEM} from "../../actions/additionalMenuAT";
 
-const styles = makeStyles((theme) => ({
+const styles = theme => ({
     icon: {
         marginRight: theme.spacing(2),
     },
@@ -29,18 +29,19 @@ const styles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     cardMedia: {
-        paddingTop: '56.25%',
         width: '100%',
         height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
     },
     cardContent: {
         flexGrow: 1,
+        textAlign: 'center'
     },
-    footer: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(6),
+    cardAction: {
+        justifyContent: 'space-between',
     },
-}));
+});
 
 const cards = [1, 2, 3];
 
@@ -71,20 +72,22 @@ class AdditionalPage extends Component {
                                             {`${additionalItems[index].price}$`}
                                         </Typography>
                                     </CardContent>
-                                    <CardActions>
+                                    <CardActions className={classes.cardAction}>
                                         <PizzaModal contentText={additionalItems[index].description}
                                                     title={additionalItems[index].title}/>
-                                        <IconButton aria-label="remove-from-cart" onClick={() => decrement(index)}>
-                                            <RemoveIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="cart">
-                                            <Badge badgeContent={additionalItems[index].amount} color="secondary">
-                                                <ShoppingCartIcon/>
-                                            </Badge>
-                                        </IconButton>
-                                        <IconButton aria-label="add-to-cart" onClick={() => increment(index)}>
-                                            <AddIcon/>
-                                        </IconButton>
+                                        <div>
+                                            <IconButton aria-label="remove-from-cart" onClick={() => decrement(index)}>
+                                                <RemoveIcon/>
+                                            </IconButton>
+                                            <IconButton aria-label="cart">
+                                                <Badge badgeContent={additionalItems[index].amount} color="secondary">
+                                                    <ShoppingCartIcon/>
+                                                </Badge>
+                                            </IconButton>
+                                            <IconButton aria-label="add-to-cart" onClick={() => increment(index)}>
+                                                <AddIcon/>
+                                            </IconButton>
+                                        </div>
                                     </CardActions>
                                 </Card>
                             </Grid>
@@ -97,7 +100,7 @@ class AdditionalPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    additionalItems: state.additionalMenuReducer.items
+    additionalItems: state.additionalMenuReducer.items,
 });
 
 const mapDispatchToProps = dispatch => ({
