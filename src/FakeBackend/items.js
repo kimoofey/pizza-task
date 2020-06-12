@@ -9,6 +9,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza0.svg`,
         price: 230,
+        amount: 0,
     },
     {
         id: 1,
@@ -20,6 +21,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza1.svg`,
         price: 210,
+        amount: 0,
     },
     {
         id: 2,
@@ -31,6 +33,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza2.svg`,
         price: 220,
+        amount: 0,
     },
     {
         id: 3,
@@ -42,6 +45,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza3.svg`,
         price: 200,
+        amount: 0,
     },
     {
         id: 4,
@@ -53,6 +57,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza4.svg`,
         price: 200,
+        amount: 0,
     },
     {
         id: 5,
@@ -64,6 +69,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza5.svg`,
         price: 250,
+        amount: 0,
     },
     {
         id: 6,
@@ -75,6 +81,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza6.svg`,
         price: 230,
+        amount: 0,
     },
     {
         id: 7,
@@ -86,6 +93,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza7.svg`,
         price: 300,
+        amount: 0,
     },
     {
         id: 8,
@@ -97,6 +105,7 @@ export const pizzaList = [
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         image: `${window.location.origin}/pizzas/pizza8.svg`,
         price: 250,
+        amount: 0,
     },
 ];
 export const additionalList = [
@@ -109,6 +118,7 @@ export const additionalList = [
         Curabitur scelerisque consequat lacus, facilisis volutpat orci. 
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         price: 10,
+        amount: 0,
     },
     {
         id: 1,
@@ -119,6 +129,7 @@ export const additionalList = [
         Curabitur scelerisque consequat lacus, facilisis volutpat orci. 
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         price: 5,
+        amount: 0,
     },
     {
         id: 2,
@@ -129,5 +140,6 @@ export const additionalList = [
         Curabitur scelerisque consequat lacus, facilisis volutpat orci. 
         Nulla bibendum cursus nisi, non dignissim nulla.`,
         price: 7,
+        amount: 0,
     },
 ];

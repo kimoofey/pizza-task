@@ -3,13 +3,15 @@ import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
 import StickyFooter from "./components/Footer";
 import MainPage from "./components/MainPage";
 import Header from "./components/Header";
+import {Provider} from "react-redux";
+import store from "./store";
 import './App.css';
 
 class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <Provider className="App" store={store}>
                 <ScopedCssBaseline>
                     <Header/>
                     <body>
@@ -17,7 +19,7 @@ class App extends Component {
                     </body>
                     <StickyFooter/>
                 </ScopedCssBaseline>
-            </div>
+            </Provider>
         );
     }
 }

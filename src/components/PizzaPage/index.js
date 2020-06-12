@@ -12,9 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import {pizzaList} from "../../FakeBackend/items";
 import RemoveIcon from '@material-ui/icons/Remove';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {connect} from "react-redux";
+import {ADD_PIZZA, REMOVE_PIZZA} from "../../actions/pizzaAT";
 
 const styles = makeStyles((theme) => ({
     icon: {
@@ -33,6 +34,8 @@ const styles = makeStyles((theme) => ({
         paddingTop: '56.25%',
         width: '100%',
         height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
     },
     cardContent: {
         flexGrow: 1,
@@ -48,7 +51,12 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 class PizzaPage extends Component {
 
     render() {
-        const {classes} = this.props;
+        const {
+            classes,
+            pizzaItems,
+            increment,
+            decrement,
+        } = this.props;
         return (
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
@@ -58,34 +66,34 @@ class PizzaPage extends Component {
                                 <CardMedia
                                     className={classes.cardMedia}
                                     title="Mmm... Pizza"
-                                > <img src={pizzaList[index].image} alt="recipe thumbnail"/>
+                                > <img src={pizzaItems[index].image} alt="recipe thumbnail"/>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        {pizzaList[index].title}
+                                        {pizzaItems[index].title}
                                     </Typography>
                                     <Typography>
-                                        {pizzaList[index].shortDescription}
+                                        {pizzaItems[index].shortDescription}
                                     </Typography>
                                     <Typography>
-                                        {`${pizzaList[index].price}$`}
+                                        {`${pizzaItems[index].price}$`}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <PizzaModal contentText={pizzaList[index].description}
-                                                title={pizzaList[index].title}/>
+                                    <PizzaModal contentText={pizzaItems[index].description}
+                                                title={pizzaItems[index].title}/>
                                     <Tooltip title="Remove">
-                                        <IconButton aria-label="add to favorites">
+                                        <IconButton aria-label="remove-from-cart" onClick={() => decrement(index)}>
                                             <RemoveIcon/>
                                         </IconButton>
                                     </Tooltip>
                                     <IconButton aria-label="cart">
-                                        <Badge badgeContent={4} color="secondary">
+                                        <Badge badgeContent={pizzaItems[index].amount} color="secondary">
                                             <ShoppingCartIcon/>
                                         </Badge>
                                     </IconButton>
                                     <Tooltip title="Add">
-                                        <IconButton aria-label="share">
+                                        <IconButton aria-label="add-to-cart" onClick={() => increment(index)}>
                                             <AddIcon/>
                                         </IconButton>
                                     </Tooltip>
@@ -99,4 +107,15 @@ class PizzaPage extends Component {
     }
 }
 
-export default withStyles(styles)(PizzaPage);
+const mapStateToProps = state => {
+    return {pizzaItems: state.pizzaReducer.items};
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        increment: id => dispatch({type: ADD_PIZZA, id}),
+        decrement: id => dispatch({type: REMOVE_PIZZA, id}),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PizzaPage));
