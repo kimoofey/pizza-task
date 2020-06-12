@@ -100,7 +100,7 @@ class AdditionalPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    additionalItems: state.additionalMenuReducer.items
+    additionalItems: state.additionalMenuReducer.items,
 });
 
 const mapDispatchToProps = dispatch => ({

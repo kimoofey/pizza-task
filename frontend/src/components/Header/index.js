@@ -2,7 +2,7 @@ import React from "react";
 
 const styles = {
     paperContainer: {
-        backgroundImage: `url('https://source.unsplash.com/random')`,
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/pizzas/cover.jpg'})`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
         backgroundSize: 'cover',

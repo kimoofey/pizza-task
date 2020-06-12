@@ -1,15 +1,17 @@
 import PizzaPage from "../PizzaPage";
-import React from 'react';
+import React, {Component} from 'react';
 import AdditionalPage from "../AdditionalMenuPage";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import {makeStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import OrderForm from "../OrderForm";
+import {NEXT_PAGE, PREV_PAGE, RESET} from "../../actions/navigationAT";
+import {connect} from "react-redux";
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     root: {
         width: '100%',
         paddingBottom: '20px',
@@ -26,11 +28,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
-}));
-
-function getSteps() {
-    return ['Select pizza!', 'Add some taste!', 'Finish order!'];
-}
+});
 
 function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -45,56 +43,79 @@ function getStepContent(stepIndex) {
     }
 }
 
-export default function MainPage() {
-    const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const steps = getSteps();
+class MainPage extends Component {
+    isDisabled() {
+        const {formItems: {firstName, lastName, email}, activePage} = this.props;
+        if (activePage === 2) {
+            return !(firstName.filled && lastName.filled && email.filled);
+        } else {
+            return false;
+        }
+    }
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    handleReset() {
+        window.location.reload(false);
+    }
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
-    return (
-        <div className={classes.root}>
-            <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            <div className={classes.buttons}>
-                {activeStep === steps.length ? (
-                    <div>
-                        <Typography className={classes.instructions}>All steps completed</Typography>
-                        <Button onClick={handleReset}>Reset</Button>
-                    </div>
-                ) : (
-                    <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+    render() {
+        const {
+            classes,
+            activePage,
+            nextPage,
+            prevPage,
+            resetPage,
+            steps,
+        } = this.props;
+        return (
+            <div className={classes.root}>
+                <Stepper activeStep={activePage} alternativeLabel>
+                    {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+                <div className={classes.buttons}>
+                    {activePage === steps.length ? (
                         <div>
-                            <Button
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                className={classes.backButton}
-                            >
-                                Back
-                            </Button>
-                            <Button variant="contained" color="primary" onClick={handleNext}>
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
+                            <Typography className={classes.instructions}>Thanks for your order!</Typography>
+                            <Typography className={classes.instructions}>Please wait for delivery.</Typography>
+                            <Button onClick={this.handleReset}>Create another order!</Button>
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <div>
+                            <Typography className={classes.instructions}>{getStepContent(activePage)}</Typography>
+                            <div>
+                                <Button
+                                    disabled={activePage === 0}
+                                    onClick={prevPage}
+                                    className={classes.backButton}
+                                >
+                                    Back
+                                </Button>
+                                <Button variant="contained" color="primary" onClick={nextPage}
+                                        disabled={this.isDisabled() === true}>
+                                    {activePage === steps.length - 1 ? 'Finish' : 'Next'}
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
+
+const mapStateToProps = state => ({
+    activePage: state.navigationReducer.activePage,
+    steps: state.navigationReducer.steps,
+    formItems: state.formReducer.items,
+});
+
+const mapDispatchToProps = dispatch => ({
+    nextPage: () => dispatch({type: NEXT_PAGE}),
+    prevPage: () => dispatch({type: PREV_PAGE}),
+    resetPage: () => dispatch({type: RESET}),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainPage));
